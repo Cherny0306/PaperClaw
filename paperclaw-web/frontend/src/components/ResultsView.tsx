@@ -13,9 +13,10 @@ interface PipelineRun {
 
 interface ResultsViewProps {
   runs: PipelineRun[]
+  onDeleteRun?: (runId: string) => void
 }
 
-export default function ResultsView({ runs }: ResultsViewProps) {
+export default function ResultsView({ runs, onDeleteRun }: ResultsViewProps) {
   const [selectedRun, setSelectedRun] = useState<string | null>(null)
   const [deliverables, setDeliverables] = useState<any>(null)
 
@@ -29,6 +30,17 @@ export default function ResultsView({ runs }: ResultsViewProps) {
       setSelectedRun(runId)
     } catch (error) {
       console.error('Failed to load deliverables:', error)
+    }
+  }
+
+  const handleDelete = (runId: string, e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (onDeleteRun) {
+      onDeleteRun(runId)
+      if (selectedRun === runId) {
+        setSelectedRun(null)
+        setDeliverables(null)
+      }
     }
   }
 
@@ -47,6 +59,13 @@ export default function ResultsView({ runs }: ResultsViewProps) {
                 className={`run-item ${selectedRun === run.run_id ? 'selected' : ''}`}
                 onClick={() => loadDeliverables(run.run_id)}
               >
+                <button
+                  className="delete-btn"
+                  onClick={(e) => handleDelete(run.run_id, e)}
+                  title="Delete this run"
+                >
+                  ✕
+                </button>
                 <p className="run-topic">{run.topic}</p>
                 <p className="run-id">{run.run_id}</p>
               </div>
@@ -65,7 +84,7 @@ export default function ResultsView({ runs }: ResultsViewProps) {
                   <div key={file.name} className="file-item">
                     <span className="file-icon">FILE</span>
                     <span className="file-name">{file.name}</span>
-                    <a 
+                    <a
                       href={`http://localhost:5001/api/download/${selectedRun}/${file.name}`}
                       className="download-link"
                       download

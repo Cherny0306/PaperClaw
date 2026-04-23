@@ -1,0 +1,39 @@
+{
+  "api_patterns": [
+    "from setuptools import find_packages, setup",
+    "setup(name=package_name, version='0.0.0', packages=find_packages())",
+    "install_requires=['setuptools', 'opencv-python', 'ultralytics']",
+    "entry_points={'console_scripts': ['yolo_node = yolo_integration.yolo_node:main']}"
+  ],
+  "file_structure": {
+    "setup.py": "Python package configuration file defining dependencies and entry points for YOLO integration"
+  },
+  "evaluation_patterns": [
+    "No explicit evaluation patterns visible in this snippet"
+  ],
+  "library_versions": {
+    "setuptools": "latest",
+    "opencv-python": "latest",
+    "ultralytics": "latest"
+  },
+  "repos": [
+    {
+      "full_name": "Masudali23/PX4-Iris-Drone-Path-Planning-CV",
+      "description": "Simulated PX4 Iris drone for autonomous path planning and obstacle avoidance using MAVROS and ROS2. Integrated real-time weed detection via YOLO-based segmentation from drone-captured images to enable targeted field surveys.",
+      "stars": 14,
+      "html_url": "https://github.com/Masudali23/PX4-Iris-Drone-Path-Planning-CV"
+    }
+  ],
+  "queries": [
+    "drone weed detection YOLO",
+    "transfer learning weed detection",
+    "MIE-YOLO implementation",
+    "numpy scipy image processing",
+    "RGB weed detection dataset",
+    "scientific computing python",
+    "computational experiment"
+  ],
+  "_cached_at": 1776821361.4960518,
+  "_domain_id": "generic",
+  "_topic_hash": "a030495faf7fcbe7"
+}

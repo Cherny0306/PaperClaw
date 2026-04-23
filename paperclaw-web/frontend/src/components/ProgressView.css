@@ -8,11 +8,44 @@
 }
 
 .progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.header-left {
+  flex: 1;
 }
 
 .progress-header h2 {
   margin-bottom: 0.5rem;
+}
+
+.pause-btn {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+.pause-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+.pause-btn:active {
+  transform: scale(0.98);
 }
 
 .status-badge {
@@ -25,19 +58,19 @@
 }
 
 .status-running {
-  background: rgba(0, 212, 170, 0.15);
+  background: rgba(99, 102, 241, 0.15);
   color: var(--primary);
   border: 2px solid var(--primary);
 }
 
 .status-completed {
-  background: rgba(0, 208, 132, 0.15);
+  background: rgba(16, 185, 129, 0.15);
   color: var(--success);
   border: 2px solid var(--success);
 }
 
 .status-failed {
-  background: rgba(255, 71, 87, 0.15);
+  background: rgba(239, 68, 68, 0.15);
   color: var(--error);
   border: 2px solid var(--error);
 }
@@ -94,7 +127,7 @@
 
 .stage-info {
   margin-bottom: 1.5rem;
-  color: var(--text-secondary);
+  color: var(--text-muted);
 }
 
 .stages-grid {
@@ -113,6 +146,7 @@
   border-radius: 12px;
   border: 2px solid var(--border);
   transition: all 0.3s;
+  cursor: pointer;
 }
 
 .stage-item.completed {
@@ -124,11 +158,16 @@
   border-color: var(--primary);
   background: rgba(99, 102, 241, 0.08);
   animation: pulse 2s infinite;
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
 }
 
 .stage-item.pending {
-  opacity: 0.4;
+  opacity: 0.5;
+}
+
+.stage-item.expanded {
+  border-color: var(--primary);
+  background: rgba(99, 102, 241, 0.15);
 }
 
 .stage-number {
@@ -158,6 +197,7 @@
   font-size: 0.875rem;
   flex: 1;
   font-weight: 500;
+  color: var(--text);
 }
 
 @keyframes pulse {
@@ -167,4 +207,117 @@
   50% {
     box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
   }
+}
+
+/* Stage Detail Modal */
+.stage-detail-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.stage-detail-modal {
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 800px;
+  width: 90%;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stage-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.stage-detail-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--text);
+}
+
+.stage-detail-close {
+  background: var(--surface-light);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  transition: all 0.2s;
+}
+
+.stage-detail-close:hover {
+  background: var(--error);
+  color: white;
+}
+
+.stage-detail-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.stage-detail-log {
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 1.5rem;
+  border-radius: 12px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  max-height: 400px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.stage-detail-empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 3rem;
+}
+
+/* Stage description in detail modal */
+.stage-description {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: var(--surface-light);
+  border-radius: 8px;
+  border-left: 4px solid var(--primary);
 }

@@ -1,0 +1,179 @@
+.stats-panel {
+  position: fixed;
+  width: 280px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  z-index: 1000;
+  overflow: hidden;
+  transition: transform 0.1s ease-out;
+  user-select: none;
+}
+
+.stats-panel.collapsed {
+  width: auto;
+}
+
+.stats-panel-header {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: move;
+  user-select: none;
+}
+
+.stats-panel:hover {
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.18);
+}
+
+.stats-panel-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.stats-panel-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.stats-panel-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  transition: background 0.2s;
+}
+
+.stats-panel-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.stats-panel-content {
+  padding: 1rem;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.stats-section {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.stats-section:last-child {
+  border-bottom: none;
+}
+
+.stats-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stats-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.stats-model {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  background: var(--surface-light);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.stats-tokens {
+  background: var(--surface-light);
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+
+.stats-tokens-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.stats-token-label {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.stats-token-value {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.stats-token-value.stats-total {
+  color: var(--primary);
+}
+
+.stats-cost {
+  color: var(--success);
+  font-size: 1.2rem;
+}
+
+.stats-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.stats-tool-tag {
+  background: var(--primary);
+  color: white;
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+}
+
+.stats-status {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.stats-stopped {
+  background: var(--surface-light);
+  color: var(--text-muted);
+}
+
+/* 滚动条样式 */
+.stats-panel-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.stats-panel-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.stats-panel-content::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+.stats-panel-content::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}

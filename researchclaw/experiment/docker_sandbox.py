@@ -15,6 +15,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import platform
 import re
 import shutil
 import subprocess
@@ -34,6 +35,18 @@ logger = logging.getLogger(__name__)
 
 _CONTAINER_COUNTER = 0
 _counter_lock = threading.Lock()
+
+
+def _get_user_ids() -> tuple[int, int]:
+    """Get user and group IDs in a cross-platform way.
+
+    On Unix: returns (os.getuid(), os.getgid())
+    On Windows: returns (1000, 1000) (default container user)
+    """
+    if platform.system() == "Windows":
+        # Windows doesn't have os.getuid/getgid; use default container user
+        return (1000, 1000)
+    return (os.getuid(), os.getgid())
 
 
 def _next_container_name() -> str:
@@ -368,7 +381,7 @@ class DockerSandbox:
         if cfg.network_policy == "none":
             # Fully isolated — no network at any point
             cmd.extend(["--network", "none"])
-            cmd.extend(["--user", f"{os.getuid()}:{os.getgid()}"])
+            cmd.extend(["--user", f"{_get_user_ids()[0]}:{_get_user_ids()[1]}"])
         elif cfg.network_policy in ("setup_only", "pip_only"):
             # Network during Phase 0+1, disabled via iptables before Phase 2.
             # Run as host user so experiment can write results.json to volume.
@@ -376,11 +389,11 @@ class DockerSandbox:
             # the user lacks root — network remains available but the code
             # has already been validated by the pipeline security check.
             cmd.extend(["-e", "RC_SETUP_ONLY_NETWORK=1"])
-            cmd.extend(["--user", f"{os.getuid()}:{os.getgid()}"])
+            cmd.extend(["--user", f"{_get_user_ids()[0]}:{_get_user_ids()[1]}"])
             cmd.extend(["--cap-add=NET_ADMIN"])
         elif cfg.network_policy == "full":
             # Full network throughout — for development/debugging
-            cmd.extend(["--user", f"{os.getuid()}:{os.getgid()}"])
+            cmd.extend(["--user", f"{_get_user_ids()[0]}:{_get_user_ids()[1]}"])
 
         # Mount pre-cached datasets
         # Priority: /opt/datasets (system) > ~/.cache/datasets (user)
