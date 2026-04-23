@@ -33,6 +33,7 @@ user_token_cache.json
 .env
 .env.*
 config_run*.yaml
+config.paperclaw.yaml
 
 # Literature search cache
 .researchclaw_cache/

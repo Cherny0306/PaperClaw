@@ -352,12 +352,19 @@ class LLMClient:
             if json_mode:
                 # Many OpenAI-compatible proxies serving Claude models don't
                 # support the response_format parameter and return HTTP 400.
-                # Fall back to a system-prompt injection for non-OpenAI models.
-                if model.startswith("claude"):
-                    _json_hint = (
-                        "You MUST respond with valid JSON only. "
-                        "Do not include any text outside the JSON object."
-                    )
+                # Also MiniMax doesn't support response_format.
+                # Fall back to a system-prompt injection for these models.
+                _json_hint = (
+                    "You MUST respond with valid JSON only. "
+                    "Do not include any text outside the JSON object."
+                )
+                # Check for models that don't support response_format
+                _needs_json_hint = (
+                    model.startswith("claude") or
+                    "minimax" in model.lower() or
+                    "deepseek" in model.lower()
+                )
+                if _needs_json_hint:
                     # Prepend to existing system message or add as new one
                     if msgs and msgs[0]["role"] == "system":
                         msgs[0]["content"] = (

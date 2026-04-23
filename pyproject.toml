@@ -29,14 +29,13 @@ all = [
 dev = ["pytest>=7.0", "httpx>=0.24"]
 
 [project.scripts]
-paperclaw = "paperclaw.cli:main"
-researchclaw = "paperclaw.cli:main"
+paperclaw = "researchclaw.cli:main"
+researchclaw = "researchclaw.cli:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["paperclaw", "researchclaw", "sibyl", "arc"]
+packages = ["researchclaw", "sibyl", "arc"]
 
 [tool.hatch.build.targets.wheel.force-include]
-"paperclaw/templates/styles" = "paperclaw/templates/styles"
 "researchclaw/templates/styles" = "researchclaw/templates/styles"
 
 [build-system]

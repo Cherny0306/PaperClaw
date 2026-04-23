@@ -11,6 +11,7 @@ if TYPE_CHECKING:
 
 # Provider presets for common LLM services
 PROVIDER_PRESETS = {
+    # 国外主流
     "openai": {
         "base_url": "https://api.openai.com/v1",
     },
@@ -26,6 +27,26 @@ PROVIDER_PRESETS = {
     "novita": {
         "base_url": "https://api.novita.ai/openai",
     },
+    # 国内主流
+    "qwen": {
+        "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+    },
+    "zhipu": {
+        "base_url": "https://open.bigmodel.cn/api/paas/v4",
+    },
+    "ernie": {
+        "base_url": "https://qianfan.baidubce.com/v2",
+    },
+    "hunyuan": {
+        "base_url": "https://hunyuan.cloud.tencent.com/v2",
+    },
+    "baichuan": {
+        "base_url": "https://api.baichuan-ai.com/openai/v1",
+    },
+    "moonshot": {
+        "base_url": "https://api.moonshot.cn/v1",
+    },
+    # 自定义端点
     "openai-compatible": {
         "base_url": None,  # Use user-provided base_url
     },
